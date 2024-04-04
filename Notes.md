@@ -32,3 +32,5 @@
     ```
 
 8. Vendor Locking :- This means to make sure your app can run on any other platform for backend like firebase instead of appwrite(which we are using). As we can never say when a given app will shutdown forever. So we make an adjustment called Services (it is a class) so that we can run our app on any platform required. 
+
+9. Now we create a Auth file, which can also be called as service file. It contains all the appwrite contents for creating a user, login, logout, getCurrentUser, etc. Notes for the same can be found in the appwrite folder in src.
