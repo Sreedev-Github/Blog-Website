@@ -1,5 +1,7 @@
 # APPWRITE
 
+<a href = "https://appwrite.io/docs/references/cloud/client-web/account">Link for appwrite Docs on Account</a>
+
 ### Vendor Locking
 
 This means to make sure your app can run on any other platform for backend like firebase instead of appwrite(which we are using). As we can never say when a given app will shutdown forever. So we make an adjustment called Services (it is a class) so that we can run our app on any platform required.
