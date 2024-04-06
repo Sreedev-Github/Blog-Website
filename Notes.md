@@ -190,3 +190,10 @@
     - And if you see we have given an active status to the navItems array, that's cause we don't want to display login and signUp to a already logged in user.
 
     - Lastly we are doing conditional rendering for the LogoutBtn.
+
+    - Though later in the code we learn a easier way for ForwardRef which can be seen in the Select.jsx component
+
+        ```js
+        // This can be done while exporting which will work the same.
+        export default React.forwardRef(Select)
+        ```
