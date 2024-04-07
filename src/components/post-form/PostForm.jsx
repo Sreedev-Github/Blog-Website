@@ -3,11 +3,11 @@ import {useForm} from 'react-hook-form';
 import {Button, Input, Select, RTE} from '../index';
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from 'react-router-dom';
-import { UseSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function PostForm({post}) {
 
-    const {register, handleSubmit, watch, setValue, control, getvalue} = useForm({
+    const {register, handleSubmit, watch, setValue, control, getValues} = useForm({
         defaultValues:{
             title: post?.title || '',
             slug: post?.slug || '',
@@ -15,13 +15,14 @@ function PostForm({post}) {
             status: post?.status || 'active',
         },
     })
-
     const navigate = useNavigate()
-    const userData = useSelector(state => state.user.userData)
+    const userData = useSelector(state => state.userData)
 
+    
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? appwriteService.uploadFile(data.image) : null
+            console.log(data.image);
 
             if (file){
                 appwriteService.deleteFile(post.featuredImage)
@@ -45,7 +46,7 @@ function PostForm({post}) {
             if(file) {
                 const fileId = file.$id
                 data.featuredImage = fileId
-                const dbPost = await appwriteService.createPost({...data, userId: userData.$id})
+                const dbPost = await appwriteService.createPost({...data, userID: userData.$id})
 
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`)
@@ -59,8 +60,8 @@ function PostForm({post}) {
             return value
                 .trim()
                 .toLowerCase()
-                .replace(/^[a-zA-Z\d\s]+/g, '-')
-                .replace(/\s/g, '-')
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '');
         }
 
         return ''
@@ -69,13 +70,13 @@ function PostForm({post}) {
     React.useEffect(()=> {
         const subscription = watch((value, {name})=>{
             if (name === 'title'){
-                setValue('slug', slugTransform(value.slug))
+                setValue('slug', slugTransform(value.title))
             }
         })
 
-        return () => {
-            subscription.unsubscribe()
-        }
+        // return () => {
+        //     subscription.unsubscribe()
+        // }
     }, [watch, slugTransform, setValue])
 
   return (

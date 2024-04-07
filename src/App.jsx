@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import authService from './appwrite/auth'
 import { login, logout } from './store/authSlice'
 import './App.css'
@@ -7,6 +7,8 @@ import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom'
 
 function App() {
+
+  const userData = useSelector((state) => state.userData) 
 
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
@@ -25,11 +27,12 @@ function App() {
   },[])
 
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>Hello Blog
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <h1 className='text-3xl mt-0 text-gray-850'>Hello { userData?.name}</h1>
     <div className='w-full block'>
       <Header/>
       <main>
-      TODO:  {/* <Outlet/> */}
+         <Outlet/>
       </main>
       <Footer/>
     </div>
